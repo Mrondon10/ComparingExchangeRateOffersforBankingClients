@@ -1,0 +1,25 @@
+services:
+  exchangerate-api:
+    image: exchangerate-system:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+ environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ExchangeRateApis__JsonApi__BaseUrl=https://api.exchangerate-json.com/v1/
+      - ExchangeRateApis__JsonApi__ApiKey=your-api-key-here
+      - ExchangeRateApis__XmlApi__BaseUrl=https://api.exchangerate-xml.com/v1/
+      - ExchangeRateApis__XmlApi__ApiKey=your-api-key-here
+      - ExchangeRateApis__JsonApi2__BaseUrl=https://api.exchangerate2.com/v1/
+   - ExchangeRateApis__JsonApi2__ApiKey=your-api-key-here
+    networks:
+  - exchangerate-network
+
+networks:
+  exchangerate-network:
+    driver: bridge
